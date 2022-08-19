@@ -1,0 +1,42 @@
+h1 {
+  color: white;
+  font-weight: 400;
+  font-size: 4ch;
+}
+
+.login-container {
+  width: 90vw;
+  max-width: 450px;
+  min-height: 30vh;
+  border-radius: 0.5rem;
+  background-color: var(--primary-dark);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.input-tf {
+  border-radius: 0.3rem;
+  height: 500px;
+
+}
+
+.input-tf {
+  border-radius: 0.2rem;
+  color: white;
+}
+
+.input-tf:focus {
+  border-radius: 0.2rem;
+}
+
+.butt {
+  background-color: var(--accent-aqua);
+  width: 8rem;
+  align-self: flex-start;
+}
+
+
+.link-text {
+  align-self: flex-start;
+}

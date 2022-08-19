@@ -1,0 +1,32 @@
+h1 {
+  color: white;
+  font-weight: 400;
+  font-size: 4ch;
+}
+
+.login-container {
+  width: 90vw;
+  max-width: 550px;
+  min-height: 40vh;
+  border-radius: 0.5rem;
+  background-color: #222831;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.input-tf {
+  border-radius: 0.3rem;
+  height: 500px;
+}
+
+
+.butt {
+  background-color: #00ADB5;
+  width: 13rem;
+  align-self: flex-start;
+}
+
+.link-text {
+  align-self: flex-start;
+}
