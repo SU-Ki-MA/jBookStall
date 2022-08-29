@@ -32,8 +32,7 @@ h1 {
 
 .butt {
   background-color: var(--accent-aqua);
-  width: 8rem;
-  align-self: flex-start;
+  width: 5rem;
 }
 
 

@@ -1,4 +1,4 @@
-# jBookStall
+# ![favicon](./images/favicon.ico) jBookStall
 
 A simple book stall managing server, made with java servlet and jsp run using Tomcat.
 
