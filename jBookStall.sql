@@ -1,4 +1,5 @@
 
+
 create database jb;
 use jb;
 
@@ -20,13 +21,11 @@ last_access_time datetime,
 session_creation datetime,
 session_ip_address varchar(50) not null,
 session_id varchar(50) not null,
-FOREIGN KEY (a_id) REFERENCES authors(a_id) );
+
+ FOREIGN KEY (a_id) REFERENCES authors(a_id) );
  
-create table users(u_id varchar(50) primary key , uname varchar(70) not null , 
-email varchar(50) not null UNIQUE, 
-pass_hash varchar(50) not null, 
-salt varchar(50) not null,
-c_id varchar(50) not null UNIQUE); 
+create table users(u_id varchar(50) primary key , uname varchar(70) not null , email varchar(50) not null UNIQUE, pass_hash varchar(50) not null, salt varchar(50) not null,
+ c_id varchar(50) not null UNIQUE); 
  
 
 create table carts( c_id varchar(50) primary key, u_id varchar(50) not null UNIQUE,FOREIGN KEY (u_id) REFERENCES users(u_id));
