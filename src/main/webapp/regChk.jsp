@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,10 +43,39 @@
 				</div>
 				<button type="submit" class="btn btn-dark mt-3 butt">Sign
 					up</button>
-				<a href="./login.html" class="link-text mt-2">registered user?</a>
+				<a href="./LoginChk.jsp" class="link-text mt-2">registered user?</a>
 			</div>
 		</form>
+		
+		
 	</div>
+	
+	
+	 <%	
+	    if(request.getAttribute("val")!=null){
+		out.println("<div class=\"toast-container position-fixed bottom-0 end-0 p-3\">\r\n"
+	    		+ "    <div class=\"toast align-items-center text-bg-danger border-0\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\">\r\n"
+	    		+ "      <div class=\"d-flex\">\r\n"
+	    		+ "       \r\n"
+	    		+ "	<div class=\"toast-body\">\r\n"+
+	    				request.getAttribute("val")
+	    		+ "    \r\n"
+	    		+ "  </div>\r\n"
+
+	    		+ "	\r\n"
+	    		+ "	\r\n"
+	    		+ "        \r\n"
+	    		+ "        <button type=\"button\" class=\"btn-close btn-close-white me-2 m-auto\" data-bs-dismiss=\"toast\"\r\n"
+	    		+ "          aria-label=\"Close\"></button>\r\n"
+	    		+ "      </div>\r\n"
+	    		+ "    </div>\r\n"
+	    		+ "  </div>\r\n"
+	    		+ "");
+	}
+	//if(request.getParameter("accounts") == null)
+	//	username = "";
+	//request.getAttribute("data");
+	%>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.bundle.min.js"
 		integrity="sha512-9GacT4119eY3AcosfWtHMsT5JyZudrexyEVzTBWV3viP/YfB9e2pEy3N7WXL3SV6ASXpTU0vzzSxsbfsuUH4sQ=="

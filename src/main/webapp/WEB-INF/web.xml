@@ -9,4 +9,56 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description>Registration</description>
+    <display-name>reg</display-name>
+    <servlet-name>reg</servlet-name>
+    <servlet-class>java.reg</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>reg</servlet-name>
+    <url-pattern>/reg</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NewLogin</display-name>
+    <servlet-name>NewLogin</servlet-name>
+    <servlet-class>NewLogin</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewLogin</servlet-name>
+    <url-pattern>/NewLogin</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>NewReg</display-name>
+    <servlet-name>NewReg</servlet-name>
+    <servlet-class>NewReg</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewReg</servlet-name>
+    <url-pattern>/regChk</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>NewCart</display-name>
+    <servlet-name>NewCart</servlet-name>
+    <servlet-class>NewCart</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewCart</servlet-name>
+    <url-pattern>/NewCart</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <description></description>
+    <display-name>NewPayment</display-name>
+    <servlet-name>NewPayment</servlet-name>
+    <servlet-class>NewPayment</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>NewPayment</servlet-name>
+    <url-pattern>/NewPayment</url-pattern>
+  </servlet-mapping>
+
+  
 </web-app>
