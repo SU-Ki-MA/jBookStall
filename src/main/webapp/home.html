@@ -30,9 +30,9 @@
             Profile
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
-            <li><a class="dropdown-item" href="/user">Username</a></li>
-            <li><a class="dropdown-item" href="NewCart">Cart</a></li>
-            <li><a class="dropdown-item" href="/logout">logout</a></li>
+            <li><form action="viewUser.jsp" method="post"><button type="submit" class=" dropdown-item">User</button></form></li>
+            <li><form action="viewCart" method="post"><button type="submit" class=" dropdown-item">Cart</button></form></li>
+            <li><form action="logout" method="post"><button type="submit" class=" dropdown-item">Logout</button></form></li>
           </ul>
         </li>
       </ul>
@@ -102,7 +102,7 @@
             <input type="hidden" name="stock" value="${elem.stock?.toString()}">
             <button type="submit" class="btn btn-dark mt-3 butt">Add to cart</button>
           </form>
-          <form action="/book" method="post" class="hidden-forms">
+          <form action="viewBook.jsp"  class="hidden-forms">
             <input type="hidden" name="id" value="${elem.id?.toString()}">
             <input type="hidden" name="name" value="${elem.name?.toString()}">
             <input type="hidden" name="author" value="${elem.author?.toString()}">

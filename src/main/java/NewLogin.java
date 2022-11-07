@@ -67,8 +67,8 @@ public class NewLogin extends HttpServlet {
 		// TODO Auto-generated method stub
 		String email = request.getParameter("email");
 		String pass = request.getParameter("pass");
-		String user1 = "";
-		String pass1 = "";
+		String user1 = "root";
+		String pass1 = "zxer";
 		Boolean cred = chkRegx(email, pass);
 		Boolean validity =false;
 		if (!cred) {
@@ -114,8 +114,8 @@ public class NewLogin extends HttpServlet {
 		Argon2 argon2 = Argon2Factory.create();
 		String hash = null;
 		String url = "jdbc:mysql://localhost:3306/jb";
-		String user1 = "";
-		String pass1 = "";
+		String user1 = "root";
+		String pass1 = "zxer";
 		String sql = "select pass_hash from users where email = '" + email + "';";
 		Connection con = null;
 		try {
@@ -143,8 +143,8 @@ public class NewLogin extends HttpServlet {
 		HttpSession session = request.getSession();
 		String email = request.getParameter("email");
 		String url = "jdbc:mysql://localhost:3306/jb";
-		String user1 = "";
-		String pass1 = "";
+		String user1 = "root";
+		String pass1 = "zxer";
 		Connection con = null;
 		String ipAddress = getClientIp(request);
 		String sId =session.getId();
@@ -155,7 +155,7 @@ public class NewLogin extends HttpServlet {
         String uId = "";
         String cId = "";
         String getCid = "select c_id,u_id from users WHERE email = '"+email+"';";
-		String updateSession = "UPDATE users SET session_id = '"+sId+"', session_ip_address= '"+ipAddress+"' , session_creation = '"+sessionCreationTime+"' WHERE email = '"+email+"';";
+		String updateSession = "UPDATE users SET session_id = '"+sId+"', session_ip_address= '"+ipAddress+"' , session_creation = '"+now1+"' WHERE email = '"+email+"';";
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			con = DriverManager.getConnection(url, user1, pass1);

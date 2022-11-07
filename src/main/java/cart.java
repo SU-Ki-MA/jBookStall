@@ -55,6 +55,10 @@ public class cart extends HttpServlet {
 		if(session==null) {
 			backToLogin(request,response);
 		}
+		String uId = (String) session.getAttribute("uId");
+		if(uId==null) {
+			backToLogin(request,response);
+		}
 		searchAuthor(request,response);
 		searchBook(request, response);
 		searchCart(request, response,session);
@@ -69,8 +73,8 @@ public class cart extends HttpServlet {
 	public void searchAuthor(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String url = "jdbc:mysql://localhost:3306/jb";        
-	    String user1 = "";                            
-	    String pass1 = "";
+	    String user1 = "root";                            
+	    String pass1 = "zxer";
 	    Connection con = null; 
 	    String stock = request.getParameter("stock");
 		String authorId = request.getParameter("authorid");	    
@@ -103,8 +107,8 @@ public class cart extends HttpServlet {
 	public static String getCid(String uId) {
 		String newCid = "";
 		String url = "jdbc:mysql://localhost:3306/jb";        
-	    String user1 = "";                            
-	    String pass1 = "";
+	    String user1 = "root";                            
+	    String pass1 = "zxer";
 	    String searchUser ="select c_id from users where u_id='"+uId+"';";
 	    Connection con = null;
 	    try {
@@ -128,8 +132,8 @@ public class cart extends HttpServlet {
 		
 		
 		String url = "jdbc:mysql://localhost:3306/jb";        
-	    String user1 = "";                            
-	    String pass1 = "";
+	    String user1 = "root";                            
+	    String pass1 = "zxer";
 	    int b_copy_sold = 1;
 	    String id = request.getParameter("id");
 		String name = request.getParameter("name");
@@ -193,13 +197,15 @@ public class cart extends HttpServlet {
 	
 	public static void searchBook(HttpServletRequest request, HttpServletResponse response) {
 		String url = "jdbc:mysql://localhost:3306/jb";        
-	    String user1 = "";                            
-	    String pass1 = "";
+	    String user1 = "root";                            
+	    String pass1 = "zxer";
 	    String id = request.getParameter("id");
 	    String searchBook = "select * from books where b_id = '"+id+"';";
 	    int b_copy_sold = 1;
 		String name = request.getParameter("name");
+		
 		String price = request.getParameter("price");
+		System.out.println("price at search book "+price);
 		String stock = request.getParameter("stock");
 		String authorid = request.getParameter("authorid");	    
 	    Connection con = null; 
@@ -216,7 +222,7 @@ public class cart extends HttpServlet {
 	        	String updateBook = "update books set b_copy_sold='"+b_copy_sold+"' where b_id = '"+id+"';";
 	        	//st.executeUpdate(updateBook);
 	        }else {
-	        	String addToBook = "INSERT INTO books VALUES ('"+id+"','"+name+"','"+price+"','"+stock+"','"+b_copy_sold+"','"+authorid+"');"; 
+	        	String addToBook = "INSERT INTO books VALUES ('"+id+"',\""+name+"\",'"+price+"','"+stock+"','"+b_copy_sold+"','"+authorid+"');"; 
 	        	st.executeUpdate(addToBook);
 	        }
 	        con.close();   

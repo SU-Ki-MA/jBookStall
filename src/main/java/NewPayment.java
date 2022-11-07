@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,6 +70,9 @@ public class NewPayment extends HttpServlet {
 		
 	}
 	
+	
+	
+	
 	public static Boolean CardChecker(String ccName ,String ccNumber,String cvv) throws ServletException, IOException {
 		String cvv_regex = "^[0-9]{3,4}$";
 		String CardNumber_regex = "^4[0-9]{12}(?:[0-9]{3})?$";
@@ -98,7 +103,7 @@ public class NewPayment extends HttpServlet {
 	 * @param response
 	 */
 	public static void updateCheckout(String cId,HttpServletRequest request, HttpServletResponse response) {
-		String url = "jdbc:mysql://localhost:3306/jb";        
+		String url = ;        
 	    String user1 = "";                            
 	    String pass1 = "";		
 	    Connection con = null;
@@ -139,6 +144,7 @@ public class NewPayment extends HttpServlet {
 	    
 	}
 	
+	
 	public static void forwordPageErr(HttpServletRequest request, HttpServletResponse response, String err) throws ServletException, IOException {
 		request.setAttribute("val", err);
 		RequestDispatcher rd = request.getRequestDispatcher("payment.jsp");
@@ -146,13 +152,16 @@ public class NewPayment extends HttpServlet {
 	}
 	public static void addCard(String ccName ,String ccNumber,String cvv,String ccExpiration,String cId,HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
-		String url = "jdbc:mysql://localhost:3306/jb";        
+		String url = ;        
 	    String user1 = "";                            
 	    String pass1 = "";		
 	    Connection con = null;
 	    Double bill_total = billTotal(cId);
 	    String bill_id = UniqRandom();
-	    String addcard = "insert into checkouts values ('"+bill_id+"','"+bill_total+"','"+ccNumber+"','"+ccName+"','"+cvv+"','"+ccExpiration+"','"+cId+"' );";
+	    DateTimeFormatter dateTimeformate = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
+        String bill_time = dateTimeformate.format(LocalDateTime.now());
+        System.out.println("bill time at add cart "+bill_time);
+	    String addcard = "insert into checkouts values ('"+bill_id+"','"+bill_time+"','"+bill_total+"','"+ccNumber+"','"+ccName+"','"+cvv+"','"+ccExpiration+"','"+cId+"' );";
 	    try {                                              
 	      	Class.forName("com.mysql.cj.jdbc.Driver");       
 	      	con= DriverManager.getConnection(url, user1,pass1);   
@@ -170,7 +179,7 @@ public class NewPayment extends HttpServlet {
 	}
 	
 	public static Double billTotal(String cId) {
-		String url = "jdbc:mysql://localhost:3306/jb";        
+		String url = ;        
 	    String user1 = "";                            
 	    String pass1 = "";		
 	    Connection con = null;

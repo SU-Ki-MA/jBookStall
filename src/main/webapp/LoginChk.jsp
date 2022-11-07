@@ -2,7 +2,14 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
+<%
+	
+response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+response.setHeader("Pragma","no-cache");
+response.setHeader("Expires","0");
+response.setDateHeader("Expires",-1);
 
+%>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -59,9 +66,7 @@
 	    		+ "  </div>\r\n"
 	    		+ "");
 	}
-	//if(request.getParameter("accounts") == null)
-	//	username = "";
-	//request.getAttribute("data");
+
 	%>
  
   

@@ -105,7 +105,7 @@ public class NewReg extends HttpServlet {
 		String uId = UniqRandom();
 		Argon2 argon2 = Argon2Factory.create();
         String hash = argon2.hash(10, 65536, 1, p.toCharArray());
-        String url = "jdbc:mysql://localhost:3306/jb";        
+        String url = ;        
         String user1 = "";                            
         String pass1 = "";  
         String sId = session.getId();

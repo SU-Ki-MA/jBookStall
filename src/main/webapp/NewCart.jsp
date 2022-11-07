@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%response.setHeader("Cache-Control","no-cache,no-store,must-revalidate"); %>
 <html lang="en">
 
 <head>
@@ -35,9 +36,9 @@
               Profile
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/user">Username</a></li>
+              <li><form action="viewUser.jsp"  method="post"><button type="submit" class=" dropdown-item ">User</button></form></li>
               <li><a class=" dropdown-item active" href="#">Cart</a></li>
-              <li><a class="dropdown-item" href="/logout">logout</a></li>
+              <li><form action="logout" method="post"><button type="submit" class=" dropdown-item">Logout</button></form></li>
             </ul>
           </li>
         </ul>
@@ -46,12 +47,12 @@
   </nav>
   <div class="main-container">
     <div class="table-grid">
-    
+
     
       <%	
 	    if(request.getAttribute("valid")!=null){
 		out.println("<div class=\"toast-container position-fixed bottom-0 end-0 p-3\">\r\n"
-	    		+ "    <div class=\"toast align-items-center text-bg-danger border-0\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\">\r\n"
+	    		+ "    <div class=\"toast align-items-center text-bg-success border-0\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\">\r\n"
 	    		+ "      <div class=\"d-flex\">\r\n"
 	    		+ "       \r\n"
 	    		+ "	<div class=\"toast-body\">\r\n"+
@@ -68,11 +69,10 @@
 	    		+ "  </div>\r\n"
 	    		+ "");
 	}
-	//if(request.getParameter("accounts") == null)
-	//	username = "";
-	//request.getAttribute("data");
+
 	%>
-      <h2>Cart ID : <%out.println(request.getParameter("cId")); %> <span class="text-success"><%if(request.getAttribute("valid")!=null){out.println(request.getAttribute("valid"));} %></span></h2>
+      <h2>Cart ID : <%out.println(request.getParameter("cId")); %> <span class="text-success">
+      <%if(request.getAttribute("valid")!=null||request.getParameter("oldCart")!=null){out.println("Purchased");} %></span></h2>
 
       <div class="cart">
 
@@ -92,18 +92,21 @@
 	    String pass1 = "zxer";
 	    String id = request.getParameter("id");	
 	    System.out.println(id);
+	    
 	    String uId = request.getParameter("uId");
 		String cId = request.getParameter("cId");
 		System.out.println("cid = "+cId);
 		System.out.println("uId = "+uId);
 		session.setAttribute("cId",cId); 
-		
+		String add = "AQty";
+		String sub = "SQty";
 		String searchBook = "SELECT cd.c_id,cd.b_id,b.b_name,cd.price,cd.qty FROM cart_data AS cd, books AS b WHERE cd.b_id = b.b_id  and cd.c_id='"+ cId+"' ;";
 	    Boolean chkout = false;
 		request.setAttribute("cId",cId);
-	 
 		Connection con = null; 
+		Double total=0.0;
 		int i=0;
+		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");       
 	      	con= DriverManager.getConnection(url, user1,pass1);   
@@ -113,73 +116,78 @@
 	        	searchBook = "SELECT cd.c_id,cd.b_id,b.b_name,cd.price,cd.qty FROM cart_data AS cd, books AS b WHERE cd.b_id = b.b_id  and cd.c_id='"+request.getAttribute("purchased")+"' ;";
 	        }
 	        ResultSet rs = st.executeQuery(searchBook);  
-	        
-	        while(rs.next()) {
-	        	i++;
+	        if (rs.next() == false) {
+	            System.out.println("ResultSet in empty in Java");
+	            out.println("<h2>No books at cart</h2>");
+	          }
+	        else{
 	        	
-	        	String price = rs.getString("price");
-	        	String qty = rs.getString("qty");
-	        	System.out.println("price "+price);
-	        	System.out.println("qty "+qty);
-	        	Double p = Double.parseDouble(price);
-	        	Double q = Double.parseDouble(qty);
-	        	Double sum= p*q;
-	        	out.println("        <div class=\"cart-item\">\r\n"
-	    	     		+ "          <div>\r\n"
-	    	     		+ "            <h5>No</h5>\r\n"
-	    	     		+ "            <p>"+i+"</p>\r\n"
-	    	     		+ "          </div>\r\n"
-	    	     		+ "          <div>\r\n"
-	    	     		+ "            <h5>Book ID</h5>\r\n"
-	    	     		+ "           <p>Rs. "+rs.getString("b_id")+"</p>\r\n"
-	    	     		+ "          </div>\r\n"
-	    	     		+ "          <div>\r\n"
-	    	     		+ "            <h5>Book Name</h5>\r\n"
-	    	     		+ "            <p>"+rs.getString("b_name")+"</p>\r\n"
-	    	     		+ "          </div>\r\n"
-	    	     		+ "          <div>\r\n"
-	    	     		+ "            <h5>Price</h5>\r\n"
-	    	     		+ "            <p>Rs. "+rs.getString("price")+"</p>\r\n"
-	    	     		+ "          </div>\r\n"
-	    	     		+ "          <div>\r\n"
-	    	     		+ "            <div>\r\n"
-	    	     		+ "              <h5>Qty</h5>\r\n"
-	    	     		+ "              <p>"+rs.getString("qty")+"</p>\r\n"
-	    	     		+ "            </div>\r\n"
-	    	     		+ "            <div>\r\n"
-	    	     		+ "              <form action=\"AQty\" method=\"post\"><input type=\"hidden\" name=\"bookid\" value=\"\"><input type=\"hidden\"\r\n"
-	    	     		+ "                  name=\"operation\" value=\"1\"><button type=\"button\" class=\"btn btn-success\">+</button></form>\r\n"
-	    	     		+ "              <form action=\"AQty\" method=\"post\"><input type=\"hidden\" name=\"bookid\" value=\"\"><input type=\"hidden\"\r\n"
-	    	     		+ "                  name=\"operation\" value=\"1\"><button type=\"button\" class=\"btn btn-secondary\">-</button></form>\r\n"
-	    	     		+ "            </div>\r\n"
-	    	     		+ "          </div>\r\n"
-	    	     		+ "          <div>\r\n"
-	    	     		+ "            <h5>Total</h5>\r\n"
-	    	     		+ "            <p>"+sum+"</p>\r\n"
-	    	     		+ "          </div>\r\n"
-	    	     		+ "          <div>\r\n"
-	    	     		+ "            <form action=\"/cart\" method=\"post\"><input type=\"hidden\" name=\"bookid\" value=\"\"><input type=\"hidden\"\r\n"
-	    	     		+ "                name=\"operation\" value=\"1\"><button type=\"button\" class=\"btn btn-danger\">x</button></form>\r\n"
-	    	     		+ "          </div>\r\n"
-	    	     		+ "        </div>");
-	        	
+	        	 do{
+	 	        	i++;
+	 	        	String bId = rs.getString("b_id");
+	 	        	String price = rs.getString("price");
+	 	        	String qty = rs.getString("qty");
+	 	        	System.out.println("price "+price);
+	 	        	System.out.println("qty "+qty);
+	 	        	Double p = Double.parseDouble(price);
+	 	        	Double q = Double.parseDouble(qty);
+	 	        	Double sum= p*q;
+	 	        	total +=sum;
+	 	        	out.println("        <div class=\"cart-item\">\r\n"
+	 	    	     		+ "          <div>\r\n"
+	 	    	     		+ "            <h5>No</h5>\r\n"
+	 	    	     		+ "            <p>"+i+"</p>\r\n"
+	 	    	     		+ "          </div>\r\n"
+	 	    	     		+ "          <div>\r\n"
+	 	    	     		+ "            <h5>Book ID</h5>\r\n"
+	 	    	     		+ "           <p>Rs. "+rs.getString("b_id")+"</p>\r\n"
+	 	    	     		+ "          </div>\r\n"
+	 	    	     		+ "          <div>\r\n"
+	 	    	     		+ "            <h5>Book Name</h5>\r\n"
+	 	    	     		+ "            <p>"+rs.getString("b_name")+"</p>\r\n"
+	 	    	     		+ "          </div>\r\n"
+	 	    	     		+ "          <div>\r\n"
+	 	    	     		+ "            <h5>Price</h5>\r\n"
+	 	    	     		+ "            <p>Rs. "+rs.getString("price")+"</p>\r\n"
+	 	    	     		+ "          </div>\r\n"
+	 	    	     		+ "          <div>\r\n"
+	 	    	     		+ "            <div>\r\n"
+	 	    	     		+ "              <h5>Qty</h5>\r\n"
+	 	    	     		+ "              <p>"+rs.getString("qty")+"</p>\r\n"
+	 	    	     		+ "            </div>\r\n"
+	 	    	     		+ "            <div>\r\n"
+	 	    	     		+ "              <form action='AQty' method=\"post\"><input type=\"hidden\" name=\"bookid\" value='"+rs.getString("b_id")+"'><input type=\"hidden\"\r\n"
+	 	    	     		+ "                  name=\"operation\" value=\"1\"><button type=\"button\" class=\"btn btn-success\">+</button></form>\r\n"
+	 	    	     		+ "              <form action='"+sub+"' method=\"post\"><input type=\"hidden\" name=\"bookid\" value=\"\"><input type=\"hidden\"\r\n"
+	 	    	     		+ "                  name=\"operation\" value=\"1\"><button type=\"button\" class=\"btn btn-secondary\">-</button></form>\r\n"
+	 	    	     		+ "            </div>\r\n"
+	 	    	     		+ "          </div>\r\n"
+	 	    	     		+ "          <div>\r\n"
+	 	    	     		+ "            <h5>Total</h5>\r\n"
+	 	    	     		+ "            <p>"+sum+"</p>\r\n"
+	 	    	     		+ "          </div>\r\n"
+	 	    	     		+ "          <div>\r\n"
+	 	    	     		+ "            <form action=\"/cart\" method=\"post\"><input type=\"hidden\" name=\"bookid\" value=\"\"><input type=\"hidden\"\r\n"
+	 	    	     		+ "                name=\"operation\" value=\"1\"><button type=\"button\" class=\"btn btn-danger\">x</button></form>\r\n"
+	 	    	     		+ "          </div>\r\n"
+	 	    	     		+ "        </div>");
+	 	        	
+	 	        	
+	 	        }while(rs.next());
 	        	
 	        }
+	       
 	        
 	        con.close();   
 	         }                
 	         catch (Exception ex) {                             
 	         System.err.println(ex); 
 	      }
-		
-		%>
-		<!-- repeating content -->
-
-      </div>
-      <div class="cart-end">
-        <div class="checkout-buttons">
-          <p>SubTotal: <span>Rs. 12618</span></p>
-          <% if(request.getAttribute("purchased")!=null){
+        out.println("      </div>\r\n"
+         		+ "      <div class=\"cart-end\">\r\n"
+         		+ "        <div class=\"checkout-buttons\">\r\n"
+         		+ "          <p>SubTotal: <span> Rs. "+total+ "</span></p>");
+		 if(request.getAttribute("purchased")!=null||i==0||request.getParameter("oldCart")!=null){
         	  out.println("<button type=\"button\" class=\"btn btn-dark mt-3 butt\"><a class=\"dropdown-item\" href=\"home.html\">Return to Home</a></button>");
           }else{
         	  out.println("<button type=\"button\" class=\"btn btn-dark mt-3 butt\"><a class=\"dropdown-item\" href=\"payment.jsp\">Proceed to Checkout</a></button>");

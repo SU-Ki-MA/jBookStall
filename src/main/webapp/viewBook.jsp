@@ -1,4 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%response.setHeader("Cache-Control","no-cache,no-store,must-revalidate"); %>
 <html lang="en">
 
 <head>
@@ -17,7 +20,7 @@
 <body>
   <nav class="navbar navbar-dark navbar-expand-lg bg-dark fixed-top" id="the-nav">
     <div class="container-fluid">
-      <a class="navbar-brand brand" href="#">JBookStall</a>
+      <a class="navbar-brand brand" href="home.html">JBookStall</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
         aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,7 +28,7 @@
       <div class="collapse navbar-collapse nav-item-set" id="navbarNavDropdown">
         <ul class="navbar-nav items-container">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/home">Home</a>
+            <a class="nav-link" aria-current="page" href="home.html">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
@@ -33,59 +36,71 @@
               Profile
             </a>
             <ul class="dropdown-menu dropdown-menu-dark">
-              <li><a class="dropdown-item" href="/user">Username</a></li>
-              <li><a class=" dropdown-item" href="/cart">Cart</a></li>
-              <li><a class="dropdown-item" href="/logout">logout</a></li>
-            </ul>
+            <li><form action="viewUser.jsp" method="post"><button type="submit" class=" dropdown-item">User</button></form></li>
+            <li><form action="viewCart" method="post"><button type="submit" class=" dropdown-item">Cart</button></form></li>
+            <li><a class="dropdown-item" href="/logout">logout</a></li>
+          </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
+  			
   <div class="main-container book-container">
+  
+
     <div class="img-container">
       <img
-        src="https://uploads.mangadex.org/covers/05a56be4-26ab-4f50-8fc0-ab8304570258/35777837-dc9c-4516-99c1-e4261c736572.jpg.512.jpg"
+        src=<%= request.getParameter("image")%>
         class="img-fluid rounded img-book" alt="...">
     </div>
     <div class="details">
       <table class="table table-borderless table-css">
         <tr>
           <th>ID</th>
-          <td>05a56be4-26ab-4f50-8fc0-ab8304570258</td>
+          <td><%= request.getParameter("id")%></td>
         </tr>
         <tr>
           <th>Name</th>
-          <td>Drawing: Saikyou Mangaka wa Oekaki Skill de Isekai Musou Suru!</td>
+          <td><%= request.getParameter("name")%></td>
         </tr>
         <tr>
           <th>Description</th>
-          <td>Akira Kamishiro was a very successful manga author, who was diagnosed with blood cancer one day. He
-            regretted the way he lived, where he could only build up empty relationships. Angry at his mother for asking
-            him to send her some money, he died in a car accident. He was given a chance to choose his new mother and
-            reincarnate in another world.\r\nAkira, not wanting to have a repeat of his past life, decided to choose an
-            ordinary but safe life.. He was reincarnated as Akira, the only son of a magic store, with his previous
-            life's memories. He had no talent for swordsmanship or magic, but he didn’t care as he was still loved by
-            his family. At one point, he realized that he can embody various things by \"drawing a picture\". That's
-            when he noticed his cheat ability...!?\r\nThis is a story of Akira who wanted to live a mediocre life in
-            another world and his adventures to protect his peaceful place!!</td>
+          <td> <%= request.getParameter("desc")%></td>
         </tr>
         <tr>
           <th>Price</th>
-          <td>Rs. 6309</td>
+          <td>Rs. <%= request.getParameter("price")%></td>
         </tr>
         <tr>
           <th>Stock</th>
-          <td>44</td>
+          <td><%= request.getParameter("stock")%></td>
         </tr>
         <tr>
           <th>Author</th>
-          <td>Im Dal-Young</td>
+          <td><%= request.getParameter("author")%></td>
         </tr>
       </table>
-      <button type="button" class="btn btn-dark mt-3 butt">Add to Cart</button>
+      <div>
+
+       <form action="cart" method="post">
+         <input type="hidden" name="id" value=<%= request.getParameter("id")%>>
+            <input type = "hidden" name = "image" value = <%= request.getParameter("image")%> >
+            <input type="hidden" name="author" value=<%= request.getParameter("author")%>>
+            <input type="hidden" name="authorid" value=<%= request.getParameter("authorid")%>>
+            <input type="hidden" name="desc" value=<%= request.getParameter("desc")%>>
+            <input type="hidden" name="name" value=<%= request.getParameter("name")%>>
+            <input type="hidden" name="price" value=<%= request.getParameter("price")%>>
+            <input type="hidden" name="stock" value=<%= request.getParameter("stock")%>>
+      <button type="submit" class="btn btn-dark mt-3 butt">Add to  Cart</button>
+      </form>
+      </div>
     </div>
   </div>
+  <%System.out.print( request.getParameter("price")); %>
+  
+  
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.bundle.min.js"
     integrity="sha512-9GacT4119eY3AcosfWtHMsT5JyZudrexyEVzTBWV3viP/YfB9e2pEy3N7WXL3SV6ASXpTU0vzzSxsbfsuUH4sQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>

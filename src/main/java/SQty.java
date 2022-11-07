@@ -7,24 +7,24 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 /**
- * Servlet implementation class AQty
+ * Servlet implementation class SQty
  */
-@WebServlet("/AQty")
-public class AQty extends HttpServlet {
+@WebServlet("/SQty")
+public class SQty extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AQty() {
+    public SQty() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,21 +43,22 @@ public class AQty extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		doGet(request, response);
 		HttpSession session = request.getSession(); 
 		String cId =(String)session.getAttribute("cId");
 		String bId = request.getParameter("bookid");
-		inc(cId,bId);
+		System.out.println("cart id at dec "+cId);
+		dec(cId,bId);
 		
 	}
-	public static void inc(String cId,String bId) {
-		String url = "jdbc:mysql://localhost:3306/jb";        
-	    String user1 = "root";                            
-	    String pass1 = "zxer";		
+	public static void dec(String cId,String bId) {
+		String url = "";        
+	    String user1 = "";                            
+	    String pass1 = "";		
 	    Connection con = null;
-	    
 	    String qty = getQty(cId);
 	    int q = Integer.parseInt(qty);
-	    q++;
+	    q--;
 	    String addcard = "update cart_data set qty = '"+q+"' where c_id='"+cId+"' and  _id='"+bId+"');";
 	    try {                                              
 	      	Class.forName("com.mysql.cj.jdbc.Driver");       
@@ -74,15 +75,16 @@ public class AQty extends HttpServlet {
 //	         		+ "      <div class=\"cart-end\">\r\n"
 //	         		+ "        <div class=\"checkout-buttons\">\r\n"
 //	         		+ "          <p>SubTotal: <span>Rs. 12618</span></p>");
+//	         System.out.println("  <input type=\"hidden\" name=\"price\" value=\"\">");
 	      }
 	    
 	}
 	
 	public static String getQty(String cId) {
 		String qty="";
-		String url = "jdbc:mysql://localhost:3306/jb";        
-	    String user1 = "root";                            
-	    String pass1 = "zxer";		
+		String url = ;        
+	    String user1 = "";                            
+	    String pass1 = "";		
 	    Connection con = null;
 	    String searchCart = "select qty from cart_data where cId='"+cId+"' );";
 	    try {                                              
@@ -102,5 +104,3 @@ public class AQty extends HttpServlet {
 		return qty;
 	}
 	}
-
-
