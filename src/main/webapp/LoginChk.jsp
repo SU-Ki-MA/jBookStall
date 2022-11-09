@@ -1,6 +1,15 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
+<%
+	
+response.setHeader("Cache-Control","no-cache,no-store,must-revalidate");
+response.setHeader("Pragma","no-cache");
+response.setHeader("Expires","0");
+response.setDateHeader("Expires",-1);
 
+%>
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,13 +27,13 @@
   <div class="main-container">
     <div class="login-container p-5">
       <h1>Login</h1>
-      <form action="/login" method="post">
+      <form action="NewLogin" method="post">
         <div class="mt-3">
           <div class="form-floating mb-3">
             <input type="email" name="email" class="form-control input-tf" id="floatingEmail"
               placeholder="name@example.com" autocomplete="off">
             <label for="floatingEmail">Email address</label>
-          </div>
+          </div><span name="errorName">${errors.Name}</span>
           <div class="form-floating">
             <input type="password" name="pass" class="form-control input-tf" id="floatingPassword"
               placeholder="Password" autocomplete="off">
@@ -33,23 +42,39 @@
         </div>
         <button type="submit" class="btn btn-dark butt mt-3">Login</button>
       </form>
-      <a href="./register.html" class="link-text mt-2">new user?</a>
+      <a href="./regChk.jsp" class="link-text mt-2">new user?</a>
     </div>
   </div>
-  <div class="toast-container position-fixed bottom-0 end-0 p-3">
-    <div class="toast align-items-center text-bg-danger border-0" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="d-flex">
-        <div class="toast-body">
-          Incorrect Password
-        </div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
-          aria-label="Close"></button>
-      </div>
-    </div>
-  </div>
+  
+  <%	
+	    if(request.getAttribute("val")!=null){
+		out.println("<div class=\"toast-container position-fixed bottom-0 end-0 p-3\">\r\n"
+	    		+ "    <div class=\"toast align-items-center text-bg-danger border-0\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\">\r\n"
+	    		+ "      <div class=\"d-flex\">\r\n"
+	    		+ "       \r\n"
+	    		+ "	<div class=\"toast-body\">\r\n"+
+	    				request.getAttribute("val")
+	    		+ "    \r\n"
+	    		+ "  </div>\r\n"
+	    		+ "	\r\n"
+	    		+ "	\r\n"
+	    		+ "        \r\n"
+	    		+ "        <button type=\"button\" class=\"btn-close btn-close-white me-2 m-auto\" data-bs-dismiss=\"toast\"\r\n"
+	    		+ "          aria-label=\"Close\"></button>\r\n"
+	    		+ "      </div>\r\n"
+	    		+ "    </div>\r\n"
+	    		+ "  </div>\r\n"
+	    		+ "");
+	}
+
+	%>
+ 
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/js/bootstrap.bundle.min.js"
     integrity="sha512-9GacT4119eY3AcosfWtHMsT5JyZudrexyEVzTBWV3viP/YfB9e2pEy3N7WXL3SV6ASXpTU0vzzSxsbfsuUH4sQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+	
   <script>
     const toasts = document.getElementsByClassName('toast')
     for (i = 0; i < toasts.length; i++) {

@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,9 +32,9 @@
             Profile
           </a>
           <ul class="dropdown-menu dropdown-menu-dark">
-            <li><form action="viewUser.jsp" method="post"><button type="submit" class=" dropdown-item">User</button></form></li>
-            <li><form action="viewCart" method="post"><button type="submit" class=" dropdown-item">Cart</button></form></li>
-            <li><form action="logout" method="post"><button type="submit" class=" dropdown-item">Logout</button></form></li>
+            <li><a class="dropdown-item" href="/user">Username</a></li>
+            <li><a class="dropdown-item" href="/cart">Cart</a></li>
+            <li><a class="dropdown-item" href="/logout">logout</a></li>
           </ul>
         </li>
       </ul>
@@ -79,7 +81,7 @@
     console.log(res)
     res.forEach(elem => {
       previousChilds = document.getElementById('grid-book').innerHTML
-      document.getElementById('grid-book').innerHTML = previousChilds + `<div class="card card-flex bg-dark">
+      document.getElementById('grid-book').innerHTML = previousChilds + ` out value="${test}" <div class="card card-flex bg-dark">
       <div class="img-div">
         <img
           src="${elem.image?.toString()}"
@@ -91,7 +93,7 @@
           <p class="card-text">${elem.desc?.substring(0, 130)}...</p>
         </div>
         <div class="buttons-set">
-          <form action="cart" method="post" class="hidden-forms">
+          <form action="/cart" method="post" class="hidden-forms">
             <input type="hidden" name="id" value="${elem.id?.toString()}">
             <input type = "hidden" name = "image" value = "${elem.image?.toString()}" >
             <input type="hidden" name="author" value="${elem.author?.toString()}">
@@ -102,7 +104,7 @@
             <input type="hidden" name="stock" value="${elem.stock?.toString()}">
             <button type="submit" class="btn btn-dark mt-3 butt">Add to cart</button>
           </form>
-          <form action="viewBook.jsp"  class="hidden-forms">
+          <form action="/book" method="post" class="hidden-forms">
             <input type="hidden" name="id" value="${elem.id?.toString()}">
             <input type="hidden" name="name" value="${elem.name?.toString()}">
             <input type="hidden" name="author" value="${elem.author?.toString()}">
@@ -115,7 +117,7 @@
           </form>
         </div>
       </div>
-    </div>`;
+    </div> `;
     })
   }
   document.getElementById('grid-book').innerHTML =

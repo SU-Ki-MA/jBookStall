@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,7 +20,7 @@
 <body>
 
   <div class="main-container">
-    <form action="/payment" method="post">
+    <form action="NewPayment" method="post">
       <div class="login-container p-5">
         <h1>Cart ID:</h1>
         <div class="row">
@@ -78,15 +80,18 @@
                 transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
             </g>
           </svg>
-
+          
+          <%String cId =(String)session.getAttribute("cId"); %>
+          <input type="type" name="cId" value="<%= cId %>" />
+         
           <div class="txt">
 
-            <form class="needs-validation" novalidate>
+            <form class="needs-validation" novalidate action="NewPayment" method="post">
 
               <div class="row">
                 <div class="col-md-12 mb-3">
                   <label for="cc-name">Name On Card</label>
-                  <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                  <input type="text" name="cc-name" class="form-control" id="cc-name" placeholder="" required>
                   <small class="text-muted">Full name as displayed on card</small>
                   <div class="invalid-feedback">
                     Name on card is required
@@ -96,7 +101,7 @@
               <div class="row">
                 <div class="col-md-12 mb-3">
                   <label for="cc-number">Card Number</label>
-                  <input maxlength='16' type="text" class="form-control" id="cc-number" placeholder="" required>
+                  <input maxlength='16' type="text" name="cc-number" class="form-control" id="cc-number" placeholder="" required>
                   <div class="invalid-feedback">
                     Credit card number is required
                   </div>
@@ -105,7 +110,7 @@
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <label for="cc-expiration">Expiration Date</label>
-                  <input maxlength='5' class="form-control" placeholder="MM/YY" type="text"
+                  <input maxlength='5' class="form-control" placeholder="MM/YY" type="text" name="cc-expiration"
                     onkeyup="formatString(event);">
                   <div class="invalid-feedback">
                     Expiration date required
@@ -114,7 +119,7 @@
                 <div class="col-md-3 mb-3"></div>
                 <div class="col-md-3 mb-3">
                   <label for="cc-cvv">CVV</label>
-                  <input maxlength='3' type="text" class="form-control" id="cc-cvv" placeholder="" required>
+                  <input maxlength='3' type="text" name="cc-cvv" class="form-control" id="cc-cvv" placeholder="" required>
                   <div class="invalid-feedback">
                     Security code required
                   </div>
@@ -132,6 +137,28 @@
     </form>
   </div>
   </div>
+    <%	
+	    if(request.getAttribute("val")!=null){
+		out.println("<div class=\"toast-container position-fixed bottom-0 end-0 p-3\">\r\n"
+	    		+ "    <div class=\"toast align-items-center text-bg-danger border-0\" role=\"alert\" aria-live=\"assertive\" aria-atomic=\"true\">\r\n"
+	    		+ "      <div class=\"d-flex\">\r\n"
+	    		+ "       \r\n"
+	    		+ "	<div class=\"toast-body\">\r\n"+
+	    				request.getAttribute("val")
+	    		+ "    \r\n"
+	    		+ "  </div>\r\n"
+	    		+ "	\r\n"
+	    		+ "	\r\n"
+	    		+ "        \r\n"
+	    		+ "        <button type=\"button\" class=\"btn-close btn-close-white me-2 m-auto\" data-bs-dismiss=\"toast\"\r\n"
+	    		+ "          aria-label=\"Close\"></button>\r\n"
+	    		+ "      </div>\r\n"
+	    		+ "    </div>\r\n"
+	    		+ "  </div>\r\n"
+	    		+ "");
+	}
+
+	%>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
